@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Date;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -22,27 +23,30 @@ import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
 	
+	private LocacaoService service;
+	
+	// definicao do contador
+	
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
-
+	
+	@Before
+	public void setUp() {
+		service = new LocacaoService();
+	}
+	
 	@Test
 	public void testeLocacao() throws Exception {
 		// cenario
-		LocacaoService service = new LocacaoService();
+		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1", 2, 5.0);
 
 		// acao
 		Locacao locacao = service.alugarFilme(usuario, filme);
-		
-		//verificacao
-//		assertThat(locacao.getValor(), is(equalTo(5.0)));
-//		assertThat(locacao.getValor(), is(not(6.0)));
-//		assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-//		assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
 		
 		//verificação com rule
 		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
@@ -51,6 +55,7 @@ public class LocacaoServiceTest {
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
 	}
 	
+	// forma elegante
 	@Test(expected = FilmeSemEstoqueException.class)
 	public void testeLocacao_FilmeSemEstoque() throws Exception {
 		// cenario
@@ -62,6 +67,7 @@ public class LocacaoServiceTest {
 		service.alugarFilme(usuario, filme);
 	}
 	
+	// forma robusta
 	@Test
 	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
 		// cenario
@@ -79,6 +85,7 @@ public class LocacaoServiceTest {
 		System.out.println("Forma robusta");
 	}
 	
+	// forma nova
 	@Test
 	public void testLocacao_filmeVazio() throws FilmeSemEstoqueException, LocadoraException {
 		// cenario

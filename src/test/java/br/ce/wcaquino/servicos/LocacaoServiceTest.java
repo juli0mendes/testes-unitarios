@@ -82,7 +82,7 @@ public class LocacaoServiceTest {
 			assertThat(e.getMessage(), is("Usuário vazio"));
 		}
 		
-		System.out.println("Forma robusta");
+//		System.out.println("Forma robusta");
 	}
 	
 	// forma nova
@@ -98,6 +98,6 @@ public class LocacaoServiceTest {
 		// ação
 		service.alugarFilme(usuario, null);
 		
-		System.out.println("Forma nova");
+//		System.out.println("Forma nova");
 	}
 }

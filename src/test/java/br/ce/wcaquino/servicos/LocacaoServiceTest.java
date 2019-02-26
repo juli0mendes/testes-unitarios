@@ -6,7 +6,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,6 +28,9 @@ public class LocacaoServiceTest {
 	
 	private LocacaoService service;
 	
+	List<Filme> filmes = new ArrayList<Filme>();
+	List<Filme> filmesSemEstoque = new ArrayList<Filme>();
+	
 	// definicao do contador
 	
 	@Rule
@@ -36,6 +42,8 @@ public class LocacaoServiceTest {
 	@Before
 	public void setUp() {
 		service = new LocacaoService();
+		filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0), new Filme("Filme 2", 3, 4.5), new Filme("Filme 3", 7, 10.2));
+		filmesSemEstoque = Arrays.asList(new Filme("Filme 1", 0, 5.0));
 	}
 	
 	@Test
@@ -43,13 +51,12 @@ public class LocacaoServiceTest {
 		// cenario
 		
 		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1", 2, 5.0);
 
 		// acao
-		Locacao locacao = service.alugarFilme(usuario, filme);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 		
 		//verificação com rule
-		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
+		error.checkThat(locacao.getValor(), is(equalTo(19.7)));
 		error.checkThat(locacao.getValor(), is(not(6.0)));
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
@@ -61,10 +68,10 @@ public class LocacaoServiceTest {
 		// cenario
 		LocacaoService service = new LocacaoService();
 		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1", 0, 5.0);
+		
 
 		// acao
-		service.alugarFilme(usuario, filme);
+		service.alugarFilme(usuario, filmesSemEstoque);
 	}
 	
 	// forma robusta
@@ -72,11 +79,10 @@ public class LocacaoServiceTest {
 	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
 		// cenario
 		LocacaoService locacaoService = new LocacaoService();
-		Filme filme = new Filme("Filme 2", 1, 4.0);
 		
 		// ação
 		try {
-			locacaoService.alugarFilme(null, filme);
+			locacaoService.alugarFilme(null, filmes);
 			fail();
 		} catch (LocadoraException e) {
 			assertThat(e.getMessage(), is("Usuário vazio"));

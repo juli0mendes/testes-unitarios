@@ -2,6 +2,8 @@ package br.ce.wcaquino.servicos;
 
 import static br.ce.wcaquino.matchers.MatchersProprios.caiEm;
 import static br.ce.wcaquino.matchers.MatchersProprios.caiNumaSegunda;
+import static br.ce.wcaquino.matchers.MatchersProprios.ehHoje;
+import static br.ce.wcaquino.matchers.MatchersProprios.ehHojeComDiferencaDias;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -26,6 +28,7 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
+import br.ce.wcaquino.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
@@ -65,9 +68,10 @@ public class LocacaoServiceTest {
 		// verificação com rule
 		error.checkThat(locacao.getValor(), is(equalTo(17.15)));
 		error.checkThat(locacao.getValor(), is(not(6.0)));
+		error.checkThat(locacao.getDataLocacao(), ehHoje());
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),
-				is(true));
+		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
+		error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
 	}
 
 	// forma elegante

@@ -41,5 +41,10 @@ public class Usuario {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + "]";
+	}
 }

@@ -10,19 +10,19 @@ import br.ce.wcaquino.utils.DataUtils;
 
 
 public class LocacaoBuilder {
-	private Locacao elemento;
+	private Locacao locacao;
 	
 	private LocacaoBuilder() {}
 
-	public static LocacaoBuilder umLocacao() {
+	public static LocacaoBuilder umaLocacao() {
 		LocacaoBuilder builder = new LocacaoBuilder();
 		inicializarDadosPadroes(builder);
 		return builder;
 	}
 
 	public static void inicializarDadosPadroes(LocacaoBuilder builder) {
-		builder.elemento = new Locacao();
-		Locacao elemento = builder.elemento;
+		builder.locacao = new Locacao();
+		Locacao elemento = builder.locacao;
 
 		
 		elemento.setUsuario(UsuarioBuilder.umUsuario().build());
@@ -33,31 +33,37 @@ public class LocacaoBuilder {
 	}
 
 	public LocacaoBuilder comUsuario(Usuario param) {
-		elemento.setUsuario(param);
+		locacao.setUsuario(param);
 		return this;
 	}
 
 	public LocacaoBuilder comListaFilmes(Filme... params) {
-		elemento.setFilmes(Arrays.asList(params));
+		locacao.setFilmes(Arrays.asList(params));
 		return this;
 	}
 
 	public LocacaoBuilder comDataLocacao(Date param) {
-		elemento.setDataLocacao(param);
+		locacao.setDataLocacao(param);
 		return this;
 	}
 
 	public LocacaoBuilder comDataRetorno(Date param) {
-		elemento.setDataRetorno(param);
+		locacao.setDataRetorno(param);
+		return this;
+	}
+	
+	public LocacaoBuilder atrasada() {
+		locacao.setDataLocacao(DataUtils.obterDataComDiferencaDias(-4));
+		locacao.setDataRetorno(DataUtils.obterDataComDiferencaDias(-2));
 		return this;
 	}
 
 	public LocacaoBuilder comValor(Double param) {
-		elemento.setValor(param);
+		locacao.setValor(param);
 		return this;
 	}
 
-	public Locacao agora() {
-		return elemento;
+	public Locacao build() {
+		return locacao;
 	}
 }

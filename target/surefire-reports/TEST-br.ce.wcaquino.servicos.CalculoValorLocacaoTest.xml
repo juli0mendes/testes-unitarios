@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" time="0.012" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" time="0.144" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Desenvolvimento\Udemy\Java\Workspace\Testes unitários em JAVA= Domine JUnit, Mockito e TDD\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf7285565481018762483.tmp"/>
+    <property name="classworlds.conf" value="C:\Desenvolvimento\Udemy\Java\Workspace\Testes unitários em JAVA= Domine JUnit, Mockito e TDD\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf1820811335777157215.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;D:\apache-maven-3.6.0\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Users\Julio Cesar Mendes\AppData\Local\Microsoft\WindowsApps;;C:\Users\Julio Cesar Mendes\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Julio Cesar Mendes\AppData\Roaming\npm;C:\Program Files\heroku\bin;C:\Desenvolvimento\Udemy\Java\IDE;;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_191\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="pt"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,8 +61,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[2 filmes: sem desconto]" time="0.011"/>
-  <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[3 filmes: 25%]" time="0"/>
+  <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[2 filmes: sem desconto]" time="0.142"/>
+  <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[3 filmes: 25%]" time="0.001"/>
   <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[4 filmes: 55%]" time="0"/>
   <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[5 filmes: 75%]" time="0.001"/>
   <testcase classname="br.ce.wcaquino.servicos.CalculoValorLocacaoTest" name="deveCalcularValorLocacaoConsiderandoDescontos[6 filmes: 100%]" time="0"/>

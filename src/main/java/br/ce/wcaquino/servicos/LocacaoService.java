@@ -32,7 +32,15 @@ public class LocacaoService {
 		if (filmes == null || filmes.isEmpty())
 			throw new LocadoraException("Filme vazio");
 		
-		if (spcService.possuiNegativacao(usuario)) {
+		boolean isNegativado;
+		
+		try {
+			isNegativado = spcService.possuiNegativacao(usuario);
+		} catch (Exception e) {
+			throw new LocadoraException("Problemas no SPC, tente novamente");
+		}
+		
+		if (isNegativado) {
 			throw new LocadoraException("Usuário negativado");
 		}
 		

@@ -2,6 +2,7 @@ package br.ce.wcaquino.servicos;
 
 import static org.mockito.Mockito.when;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -14,6 +15,7 @@ public class CalculadoraMockTest {
 		
 		when(calculadora.somar(Mockito.eq(1), Mockito.anyInt())).thenReturn(5);
 		
-		System.out.println(calculadora.somar(1, 8));
+		Assert.assertEquals(5, calculadora.somar(1, 10000));
+		
 	}
 }

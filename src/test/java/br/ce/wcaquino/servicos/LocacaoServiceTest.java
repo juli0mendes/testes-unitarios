@@ -1,5 +1,6 @@
 package br.ce.wcaquino.servicos;
 
+import static br.ce.wcaquino.builders.FilmeBuilder.umFilme;
 import static br.ce.wcaquino.builders.LocacaoBuilder.umaLocacao;
 import static br.ce.wcaquino.builders.UsuarioBuilder.umUsuario;
 import static br.ce.wcaquino.matchers.MatchersProprios.caiEm;
@@ -43,9 +44,11 @@ import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
-import buildermaster.BuilderMaster;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class LocacaoServiceTest.
+ *
  * @author Julio Cesar Mendes
  * 
  *         The Class LocacaoServiceTest.
@@ -91,7 +94,7 @@ public class LocacaoServiceTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		filmes = Arrays.asList(br.ce.wcaquino.builders.FilmeBuilder.umFilme().comValor(5.0).build());
+		filmes = Arrays.asList(umFilme().comValor(5.0).build());
 
 		filmesSemEstoque = Arrays.asList(FilmeBuilder.umFilmeSemEstoque().build());
 	}
@@ -207,11 +210,10 @@ public class LocacaoServiceTest {
 
 	/**
 	 * Nao deve alugar filme para negativado spc.
-	 *
-	 * @throws FilmeSemEstoqueException the filme sem estoque exception
+	 * @throws Exception 
 	 */
 	@Test
-	public void naoDeveAlugarFilmeParaNegativadoSpc() throws FilmeSemEstoqueException {
+	public void naoDeveAlugarFilmeParaNegativadoSpc() throws Exception {
 
 		Usuario usuario = umUsuario().build();
 
@@ -260,11 +262,30 @@ public class LocacaoServiceTest {
 	}
 
 	/**
+	 * Deve tratar erro no SPC.
+	 * @throws Exception 
+	 */
+	@Test
+	public void deveTratarErroNoSPC() throws Exception {
+		// cenario
+		Usuario usuario = umUsuario().build();
+
+		when(this.spcService.possuiNegativacao(usuario)).thenThrow(new Exception("Falha catastrófica"));
+
+		// verificao
+		exception.expect(LocadoraException.class);
+		exception.expectMessage("Problemas no SPC, tente novamente");
+
+		// acao
+		this.locacaoService.alugarFilme(usuario, filmes);
+	}
+
+	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
-	public static void main(String[] args) {
-		new BuilderMaster().gerarCodigoClasse(Locacao.class);
-	}
+//	public static void main(String[] args) {
+//		new BuilderMaster().gerarCodigoClasse(Locacao.class);
+//	}
 }

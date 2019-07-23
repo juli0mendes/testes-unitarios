@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 public class CalculadoraMockTest {
@@ -13,9 +14,12 @@ public class CalculadoraMockTest {
 
 		Calculadora calculadora = Mockito.mock(Calculadora.class);
 		
-		when(calculadora.somar(Mockito.eq(1), Mockito.anyInt())).thenReturn(5);
+		ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+		
+		when(calculadora.somar(argumentCaptor.capture(), argumentCaptor.capture())).thenReturn(5);
 		
 		Assert.assertEquals(5, calculadora.somar(1, 10000));
 		
+		System.out.println(argumentCaptor.getAllValues());
 	}
 }

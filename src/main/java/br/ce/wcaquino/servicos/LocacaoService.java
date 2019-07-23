@@ -14,14 +14,30 @@ import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LocacaoService.
+ */
 public class LocacaoService {
 	
+	/** The locacao DAO. */
 	private LocacaoDAO locacaoDAO;
 	
+	/** The spc service. */
 	private SPCService spcService;
 	
+	/** The email service. */
 	private EmailService emailService;
 	
+	/**
+	 * Alugar filme.
+	 *
+	 * @param usuario the usuario
+	 * @param filmes the filmes
+	 * @return the locacao
+	 * @throws LocadoraException the locadora exception
+	 * @throws FilmeSemEstoqueException the filme sem estoque exception
+	 */
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws LocadoraException, FilmeSemEstoqueException {
 		
 		Double precoTotalLocacao = 0D;
@@ -93,6 +109,9 @@ public class LocacaoService {
 		return locacao;
 	}
 	
+	/**
+	 * Notificar atrasos.
+	 */
 	public void notificarAtrasos() {
 		List<Locacao> locacoes = this.locacaoDAO.obterLocacoesPendentes();
 		
@@ -100,5 +119,23 @@ public class LocacaoService {
 			if (locacao.getDataRetorno().before(new Date()))
 				emailService.notificarAtraso(locacao.getUsuario());
 		}
+	}
+	
+	/**
+	 * Prorrogar locacao.
+	 *
+	 * @param locacao the locacao
+	 * @param dias the dias
+	 */
+	public void prorrogarLocacao(Locacao locacao, int dias) {
+		
+		Locacao novaLocacao = new Locacao();
+		novaLocacao.setUsuario(locacao.getUsuario());
+		novaLocacao.setFilmes(locacao.getFilmes());
+		novaLocacao.setDataLocacao(new Date());
+		novaLocacao.setDataRetorno(DataUtils.obterDataComDiferencaDias(dias));
+		novaLocacao.setValor(locacao.getValor() * dias);
+		
+		this.locacaoDAO.salvar(novaLocacao);
 	}
 }

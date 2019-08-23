@@ -90,11 +90,11 @@ public class LocacaoService {
 		Locacao locacao = new Locacao();
 		locacao.setFilmes(filmes);
 		locacao.setUsuario(usuario);
-		locacao.setDataLocacao(new Date());
+		locacao.setDataLocacao(Calendar.getInstance().getTime());
 		locacao.setValor(precoTotalLocacao);
 
 		//Entrega no dia seguinte
-		Date dataEntrega = new Date();
+		Date dataEntrega = Calendar.getInstance().getTime();
 		dataEntrega = adicionarDias(dataEntrega, 1);
 		
 		// se data da entrega for domingo

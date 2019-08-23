@@ -6,11 +6,11 @@ import br.ce.wcaquino.entidades.Locacao;
 
 public class LocacaoDAOImpl implements LocacaoDAO {
 
-	@Override
+//	@Override
 	public void salvar(Locacao locacao) {
 	}
 
-	@Override
+//	@Override
 	public List<Locacao> obterLocacoesPendentes() {
 		return null;
 	}

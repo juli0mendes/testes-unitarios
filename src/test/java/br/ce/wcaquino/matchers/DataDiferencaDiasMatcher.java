@@ -20,15 +20,13 @@ public class DataDiferencaDiasMatcher extends TypeSafeMatcher<Date> {
 
 	public DataDiferencaDiasMatcher(Class<?> expectedType) {
 		super(expectedType);
-		// TODO Auto-generated constructor stub
 	}
 
 	public DataDiferencaDiasMatcher(ReflectiveTypeFinder typeFinder) {
 		super(typeFinder);
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+//	@Override
 	public void describeTo(Description description) {
 		Date dataEsperada = DataUtils.obterDataComDiferencaDias(qtdDias);
 		

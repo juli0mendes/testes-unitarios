@@ -14,7 +14,6 @@ import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LocacaoService.
  */
@@ -40,8 +39,6 @@ public class LocacaoService {
 	 */
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws LocadoraException, FilmeSemEstoqueException {
 		
-		Double precoTotalLocacao = 0D;
-		
 		if (usuario == null)
 			throw new LocadoraException("Usuário vazio");
 		
@@ -60,38 +57,11 @@ public class LocacaoService {
 			throw new LocadoraException("Usuário negativado");
 		}
 		
-		for (int i = 0; i < filmes.size(); i++) {
-
-			Filme filme = filmes.get(i);
-			
-			if (filme.getEstoque() == 0)
-				throw new FilmeSemEstoqueException();
-			
-			Double valorFilme = filme.getPrecoLocacao();
-			
-			switch (i) {
-			case 2:
-				valorFilme = valorFilme * 0.75;
-				break;
-			case 3:
-				valorFilme = valorFilme * 0.50;
-				break;
-			case 4:
-				valorFilme = valorFilme * 0.25;
-				break;
-			case 5:
-				valorFilme = 0D;
-				break;
-			}
-			
-			precoTotalLocacao += valorFilme;
-		}
-			
 		Locacao locacao = new Locacao();
 		locacao.setFilmes(filmes);
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(Calendar.getInstance().getTime());
-		locacao.setValor(precoTotalLocacao);
+		locacao.setValor(this.calcularValorLocacao(filmes));
 
 		//Entrega no dia seguinte
 		Date dataEntrega = Calendar.getInstance().getTime();
@@ -108,7 +78,7 @@ public class LocacaoService {
 		
 		return locacao;
 	}
-	
+
 	/**
 	 * Notificar atrasos.
 	 */
@@ -137,5 +107,38 @@ public class LocacaoService {
 		novaLocacao.setValor(locacao.getValor() * dias);
 		
 		this.locacaoDAO.salvar(novaLocacao);
+	}
+	
+	private Double calcularValorLocacao(List<Filme> filmes) throws FilmeSemEstoqueException {
+		
+		System.out.println("LocacaoService.calcularValorLocacao - started");
+		
+		Double precoTotalLocacao = 0D;
+		
+		for (int i = 0; i < filmes.size(); i++) {
+
+			Filme filme = filmes.get(i);
+			
+			if (filme.getEstoque() == 0)
+				throw new FilmeSemEstoqueException();
+			
+			Double valorFilme = filme.getPrecoLocacao();
+			
+			switch (i) {
+				case 2: valorFilme = valorFilme * 0.75;
+					break;
+				case 3: valorFilme = valorFilme * 0.50;
+					break;
+				case 4: valorFilme = valorFilme * 0.25;
+					break;
+				case 5: valorFilme = 0D;
+					break;
+			}
+			precoTotalLocacao += valorFilme;
+		}
+		
+		System.out.println("LocacaoService.calcularValorLocacao - finalized");
+		
+		return precoTotalLocacao;
 	}
 }

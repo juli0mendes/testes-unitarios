@@ -21,7 +21,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -98,6 +97,8 @@ public class LocacaoServiceTest {
 	public void setUp() {
 
 		MockitoAnnotations.initMocks(this);
+		
+		locacaoService = PowerMockito.spy(locacaoService);
 
 		filmes = Arrays.asList(umFilme().comValor(5.0).build());
 
@@ -330,7 +331,22 @@ public class LocacaoServiceTest {
 		this.error.checkThat(locacaoRetornada.getDataRetorno(), ehHojeComDiferencaDias(qtdDias));
 	}
 	
-	
+	@Test
+	public void deveAlugarFilmeSemCalcularValor() throws Exception {
+		
+		// cenario
+		Usuario usuario = UsuarioBuilder.umUsuario().build();
+		
+		PowerMockito.doReturn(1.0).when(locacaoService, "calcularValorLocacao", filmes);
+		
+		// acao
+		Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
+		
+		// verificacao
+		assertThat(locacao.getValor(), is(1.0));
+		
+		PowerMockito.verifyPrivate(this.locacaoService).invoke("calcularValorLocacao", filmes);
+	}
 
 	/**
 	 * The main method.

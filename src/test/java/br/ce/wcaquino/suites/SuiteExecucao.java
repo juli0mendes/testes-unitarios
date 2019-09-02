@@ -10,21 +10,21 @@ import br.ce.wcaquino.servicos.CalculadoraTest;
 import br.ce.wcaquino.servicos.CalculoValorLocacaoTest;
 import br.ce.wcaquino.servicos.LocacaoServiceTest;
 
-@RunWith(Suite.class)
+//@RunWith(Suite.class)
 @SuiteClasses({
-	CalculadoraTest.class,
+//	CalculadoraTest.class,
 	CalculoValorLocacaoTest.class,
 	LocacaoServiceTest.class
 })
 public class SuiteExecucao {
-	
-	@AfterClass
-	public static void after() {
-		System.out.println("after");
-	}
-	
-	@BeforeClass
-	public static void before() {
-		System.out.println("before");
-	}
+//	
+//	@AfterClass
+//	public static void after() {
+//		System.out.println("after");
+//	}
+//	
+//	@BeforeClass
+//	public static void before() {
+//		System.out.println("before");
+//	}
 }

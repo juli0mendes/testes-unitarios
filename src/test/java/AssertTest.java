@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import br.ce.wcaquino.entidades.Usuario;
+import br.com.juli0mendes.domains.Usuario;
 
 public class AssertTest {
 

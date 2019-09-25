@@ -26,12 +26,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -47,56 +47,34 @@ import br.com.juli0mendes.domains.Usuario;
 import br.com.juli0mendes.exceptions.FilmeSemEstoqueException;
 import br.com.juli0mendes.exceptions.LocadoraException;
 import br.com.juli0mendes.repositories.LocacaoDAO;
-import br.com.juli0mendes.runners.ParallelRunner;
-import br.com.juli0mendes.services.EmailService;
-import br.com.juli0mendes.services.LocacaoService;
-import br.com.juli0mendes.services.SPCService;
 import br.com.juli0mendes.utils.DataUtils;
 
-/**
- * The Class LocacaoServiceTest.
- *
- * @author Julio Cesar Mendes
- * 
- *         The Class LocacaoServiceTest.
- */
-@RunWith(ParallelRunner.class)
+//@RunWith(ParallelRunner.class)
 public class LocacaoServiceTest {
-
-	/** The locacao service. */
+	
 	@InjectMocks @Spy
 	private LocacaoService locacaoService;
 
-	/** The spc service. */
 	@Mock
 	private SPCService spcService;
 
-	/** The email service. */
 	@Mock
 	private EmailService emailService;
 
-	/** The locacao DAO. */
 	@Mock
 	private LocacaoDAO locacaoDAO;
 
-	/** The filmes. */
-	List<Filme> filmes = new ArrayList<Filme>();
+	private List<Filme> filmes = new ArrayList<Filme>();
 
-	/** The filmes sem estoque. */
 	List<Filme> filmesSemEstoque = new ArrayList<Filme>();
 
-	/** The error. */
 	// definicao do contador
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 
-	/** The exception. */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	/**
-	 * Sets the up.
-	 */
 	@Before
 	public void setUp() {
 
@@ -107,18 +85,20 @@ public class LocacaoServiceTest {
 		filmes = Arrays.asList(umFilme().comValor(5.0).build());
 
 		filmesSemEstoque = Arrays.asList(FilmeBuilder.umFilmeSemEstoque().build());
+		
+		CalculadoraTest.ordem.append(2);
 	}
 	
 	@After
 	public void tearDown() {
 		System.out.println("Finalizando 2...");
 	}
+	
+	@AfterClass
+	public static void tearDownClass() {
+		System.out.println(CalculadoraTest.ordem.toString());
+	}
 
-	/**
-	 * Deve alugar filme.
-	 *
-	 * @throws Exception the exception
-	 */
 	@Test
 	public void deveAlugarFilme() throws Exception {
 
@@ -139,11 +119,6 @@ public class LocacaoServiceTest {
 		error.checkThat(isMesmaData(locacao.getDataRetorno(), obterData(29, 4, 2017)), is(true));
 	}
 
-	/**
-	 * Nao deve alugar filme sem estoque.
-	 *
-	 * @throws Exception the exception
-	 */
 	// forma elegante
 	@Test(expected = FilmeSemEstoqueException.class)
 	public void naoDeveAlugarFilmeSemEstoque() throws Exception {
@@ -157,11 +132,6 @@ public class LocacaoServiceTest {
 		locacaoService.alugarFilme(usuario, filmesSemEstoque);
 	}
 
-	/**
-	 * Nao deve alugar filme sem usuario.
-	 *
-	 * @throws FilmeSemEstoqueException the filme sem estoque exception
-	 */
 	// forma robusta
 	@Test
 	public void naoDeveAlugarFilmeSemUsuario() throws FilmeSemEstoqueException {
@@ -179,12 +149,6 @@ public class LocacaoServiceTest {
 //		System.out.println("Forma robusta");
 	}
 
-	/**
-	 * Nao deve alugar filme sem filme.
-	 *
-	 * @throws FilmeSemEstoqueException the filme sem estoque exception
-	 * @throws LocadoraException        the locadora exception
-	 */
 	// forma nova
 	@Test
 	public void naoDeveAlugarFilmeSemFilme() throws FilmeSemEstoqueException, LocadoraException {
@@ -201,10 +165,6 @@ public class LocacaoServiceTest {
 //		System.out.println("Forma nova");
 	}
 
-	/**
-	 * Deve devolger na segunda ao alugar no sabado.
-	 * @throws Exception 
-	 */
 	@Test
 	public void deveDevolgerNaSegundaAoAlugarNoSabado() throws Exception {
 
@@ -220,10 +180,6 @@ public class LocacaoServiceTest {
 		assertThat(retorno.getDataRetorno(), caiNumaSegunda());
 	}
 
-	/**
-	 * Nao deve alugar filme para negativado spc.
-	 * @throws Exception 
-	 */
 	@Test
 	public void naoDeveAlugarFilmeParaNegativadoSpc() throws Exception {
 
@@ -244,9 +200,6 @@ public class LocacaoServiceTest {
 		verify(spcService).possuiNegativacao(usuario);
 	}
 
-	/**
-	 * Deve enviar email para locacoes atrasadas.
-	 */
 	@Test
 	public void deveEnviarEmailParaLocacoesAtrasadas() {
 		// cenario
@@ -273,10 +226,6 @@ public class LocacaoServiceTest {
 		verifyNoMoreInteractions(emailService);
 	}
 
-	/**
-	 * Deve tratar erro no SPC.
-	 * @throws Exception 
-	 */
 	@Test
 	public void deveTratarErroNoSPC() throws Exception {
 		// cenario
@@ -292,9 +241,6 @@ public class LocacaoServiceTest {
 		this.locacaoService.alugarFilme(usuario, filmes);
 	}
 	
-	/**
-	 * Deve prorrogar uma locacao.
-	 */
 	@Test
 	public void deveProrrogarUmaLocacao() {
 		
@@ -332,11 +278,6 @@ public class LocacaoServiceTest {
 		assertThat(valor, is(5.0));
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 //	public static void main(String[] args) {
 //		new BuilderMaster().gerarCodigoClasse(Locacao.class);
 //	}

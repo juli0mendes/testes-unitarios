@@ -9,10 +9,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +22,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -34,56 +34,35 @@ import br.com.juli0mendes.domains.Filme;
 import br.com.juli0mendes.domains.Locacao;
 import br.com.juli0mendes.domains.Usuario;
 import br.com.juli0mendes.repositories.LocacaoDAO;
-import br.com.juli0mendes.services.EmailService;
-import br.com.juli0mendes.services.LocacaoService;
-import br.com.juli0mendes.services.SPCService;
 import br.com.juli0mendes.utils.DataUtils;
 
-/**
- * The Class LocacaoServiceTest_PowerMock.
- *
- * @author Julio Cesar Mendes
- * 
- *         The Class LocacaoServiceTest.
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({LocacaoService.class})
 public class LocacaoServiceTest_PowerMock {
 
-	/** The locacao service. */
 	@InjectMocks
 	private LocacaoService locacaoService;
 
-	/** The spc service. */
 	@Mock
 	private SPCService spcService;
 
-	/** The email service. */
 	@Mock
 	private EmailService emailService;
 
-	/** The locacao DAO. */
 	@Mock
 	private LocacaoDAO locacaoDAO;
 
-	/** The filmes. */
-	List<Filme> filmes = new ArrayList<Filme>();
+	private List<Filme> filmes = new ArrayList<Filme>();
 
-	/** The filmes sem estoque. */
 	List<Filme> filmesSemEstoque = new ArrayList<Filme>();
 
-	/** The error. */
 	// definicao do contador
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 
-	/** The exception. */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	/**
-	 * Sets the up.
-	 */
 	@Before
 	public void setUp() {
 
@@ -94,13 +73,21 @@ public class LocacaoServiceTest_PowerMock {
 		filmes = Arrays.asList(umFilme().comValor(5.0).build());
 
 		filmesSemEstoque = Arrays.asList(FilmeBuilder.umFilmeSemEstoque().build());
+		
+		System.out.println("Iniciando 4...");
+		CalculadoraTest.ordem.append(4);
+	}
+	
+	@After
+	public void tearDown() {
+		System.out.println("Finalizando 4...");
+	}
+	
+	@AfterClass
+	public static void tearDownClass() {
+		System.out.println(CalculadoraTest.ordem.toString());
 	}
 
-	/**
-	 * Deve alugar filme.
-	 *
-	 * @throws Exception the exception
-	 */
 	@Test
 	public void deveAlugarFilme() throws Exception {
 

@@ -1,0 +1,8 @@
+/.settings
+/.classpath
+/.project
+/target/
+/client-wsdl/
+*.iml
+/bin/
+/false

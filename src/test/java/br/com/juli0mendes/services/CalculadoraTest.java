@@ -3,16 +3,15 @@ package br.com.juli0mendes.services;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import br.com.juli0mendes.exceptions.NaoPodeDividirPorZeroException;
-import br.com.juli0mendes.runners.ParallelRunner;
-import br.com.juli0mendes.services.Calculadora;
 
-@RunWith(ParallelRunner.class)
 public class CalculadoraTest {
+	
+	public static StringBuffer ordem = new StringBuffer();
 	
 	public Calculadora calculadora;
 	
@@ -20,11 +19,17 @@ public class CalculadoraTest {
 	public void setUp() {
 		calculadora = new Calculadora();
 		System.out.println("Iniciando...");
+		ordem.append(1);
 	}
 	
 	@After
 	public void tearDown() {
 		System.out.println("Finalizando...");
+	}
+	
+	@AfterClass
+	public static void tearDownClass() {
+		System.out.println(ordem.toString());
 	}
 
 	@Test
